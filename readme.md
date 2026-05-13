@@ -39,9 +39,9 @@ export interface Order {
 ```
 
 ### Mock endpoints (fixture responses)
-You may implement a mock version of the following endpoints in your application to simulate backend requests. These can be simple Angular services
-which immediately return a list of test patients. The `GET /orders` and `POST /orders` calls may retrieve and store orders in sessionStorage/localStorage,
-but other storage solutions such as a service based store, a store library such as Elf or NGRX, or even a local sqlite database are all fine!
+A mock version of the backend API is provided in the form of services, which return fixture responses.
+The order service additionally lets you create new orders.
+
 
 - `GET /patients` -> list of patients
 - `GET /locations` -> list of selectable locations
@@ -49,7 +49,7 @@ but other storage solutions such as a service based store, a store library such 
 - `GET /orders` -> existing orders to show on calendar
 - `POST /orders` -> create a new order
 
-## 3) What would we like to see (Functionally):
+## What would we like to see (Functionally):
 A basic angular application with a design system of your choice (or your own styling, whichever you prefer). For the calendar, use the `fullCalendar` library.
 We would like the application to have the following features/behavior:
 
@@ -66,12 +66,13 @@ We would like the application to have the following features/behavior:
     - A new order is created, and
     - the order appears immediately on the calendar
 
-## 4) What we would like to see (Technically):
-- The code is readable, structured, and easy to run
-- The Code is tested with a testing framework of your choice
+## What we would like to see (technically)
+The code is structured, readable, and easy to run.
+Please limit your use of AI for generating the application code. We expect you to be able to explain the code you submit.
 
-## 5) Deliverables
-- The Source code in a Git repository
+
+## Deliverables
+- The Source code in a Git repository. Preferably fork this repository on GitHub.
 - A Short `README` with:
     - Setup/run instructions
     - Assumptions/limitations
