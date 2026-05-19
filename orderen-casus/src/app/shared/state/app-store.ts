@@ -4,9 +4,9 @@ import { PatientStore } from "./patient/patient-reducer";
 import { OrderStore } from "./order/order-reducer";
 
 export interface Appstore{
-    test: TestStore,
-    location: LocationStore,
-    patient: PatientStore, 
+    tests: TestStore,
+    locations: LocationStore,
+    patients: PatientStore, 
     orders: OrderStore
 }
 

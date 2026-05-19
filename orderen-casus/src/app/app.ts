@@ -10,11 +10,13 @@ import { GET_TESTS } from './shared/state/test/test-actions';
 import { GET_LOCATIONS } from './shared/state/location/location-actions';
 import { GET_ORDERS } from './shared/state/order/order-actions';
 import { Appstore } from './shared/state/app-store';
+import { RouterOutlet } from '@angular/router';
 
 @Component({ 
   selector: 'app-root',
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  imports: [RouterOutlet]
 })
 export class App {
   private readonly patientService = inject(PatientService);
@@ -29,16 +31,16 @@ export class App {
     this.store.dispatch({ type: GET_LOCATIONS });
     this.store.dispatch({ type: GET_ORDERS });
 
-    this.store.select('patient').pipe(take(1)).subscribe((patientState) => {
+    this.store.select('patients').pipe(take(1)).subscribe((patientState) => {
       console.log('patientState', patientState);
     });
-    this.store.select('test').pipe(take(1)).subscribe((testState) => {
+    this.store.select('tests').pipe(take(1)).subscribe((testState) => {
       console.log('testState', testState);
     });
-    this.store.select('location').pipe(take(1)).subscribe((locationState) => {
+    this.store.select('locations').pipe(take(1)).subscribe((locationState) => {
       console.log('locationState', locationState);
     });
-    this.store.select('order').pipe(take(1)).subscribe((orderState) => {
+    this.store.select('orders').pipe(take(1)).subscribe((orderState) => {
       console.log('orderState', orderState);
     });
     
