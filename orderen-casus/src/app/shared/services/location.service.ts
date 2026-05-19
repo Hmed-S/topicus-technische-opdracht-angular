@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { LOCATION_FIXTURES } from 'src/app/fixtures';
-import { Location } from 'src/app/models/location.model';
+import { LOCATION_FIXTURES } from 'src/app/shared/fixtures';
+import { Location } from 'src/app/shared/models/location';
 
 @Injectable({
   providedIn: 'root'

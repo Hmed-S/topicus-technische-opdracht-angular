@@ -1,4 +1,4 @@
-import { Patient } from 'src/app/models/patient.model';
+import { Patient } from 'src/app/shared/models/patient';
 
 export const PATIENT_FIXTURES: Patient[] = [
   {

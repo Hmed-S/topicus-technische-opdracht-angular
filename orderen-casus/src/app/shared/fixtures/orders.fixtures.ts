@@ -1,4 +1,4 @@
-import { Order } from 'src/app/models/order.model';
+import { Order } from 'src/app/shared/models/order';
 
 export const ORDER_FIXTURES: Order[] = [
   {

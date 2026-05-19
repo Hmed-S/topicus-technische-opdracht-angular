@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { PATIENT_FIXTURES } from 'src/app/fixtures';
-import { Patient } from 'src/app/models/patient.model';
+import { PATIENT_FIXTURES } from 'src/app/shared/fixtures';
+import { Patient } from 'src/app/shared/models/patient';
 
 @Injectable({
   providedIn: 'root'

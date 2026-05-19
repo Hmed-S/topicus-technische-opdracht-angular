@@ -1,4 +1,4 @@
-import { Location } from 'src/app/models/location.model';
+import { Location } from 'src/app/shared/models/location';
 
 export const LOCATION_FIXTURES: Location[] = [
   {

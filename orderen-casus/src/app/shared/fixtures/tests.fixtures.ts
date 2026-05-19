@@ -1,4 +1,4 @@
-import { Test } from 'src/app/models/test.model';
+import { Test } from 'src/app/shared/models/test';
 
 export const TEST_FIXTURES: Test[] = [
   {

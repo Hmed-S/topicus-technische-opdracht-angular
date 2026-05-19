@@ -1,8 +1,8 @@
 import { inject, Injectable, Injector, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, of } from 'rxjs';
-import { ORDER_FIXTURES } from 'src/app/fixtures';
-import { Order } from 'src/app/models/order.model';
+import { ORDER_FIXTURES } from 'src/app/shared/fixtures';
+import { Order } from 'src/app/shared/models/order';
 
 @Injectable({
   providedIn: 'root',

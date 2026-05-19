@@ -1,11 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { take } from 'rxjs';
-import { LocationService } from 'src/app/services/location.service';
-import { OrderService } from 'src/app/services/order.service';
-import { PatientService } from 'src/app/services/patient.service';
-import { TestService } from 'src/app/services/test.service';
+import { LocationService } from 'src/app/shared/services/location.service';
+import { OrderService } from 'src/app/shared/services/order.service';
+import { PatientService } from 'src/app/shared/services/patient.service';
+import { TestService } from 'src/app/shared/services/test.service';
+import { Store } from '@ngrx/store';
+import { GET_PATIENTS } from './shared/state/patient/patient-actions';
+import { GET_TESTS } from './shared/state/test/test-actions';
+import { GET_LOCATIONS } from './shared/state/location/location-actions';
+import { GET_ORDERS } from './shared/state/order/order-actions';
+import { Appstore } from './shared/state/app-store';
 
-@Component({
+@Component({ 
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -15,7 +21,29 @@ export class App {
   private readonly testService = inject(TestService);
   private readonly locationService = inject(LocationService);
   private readonly orderService = inject(OrderService);
+  private readonly store = inject(Store<Appstore>);
 
+  logStore(): void {
+    this.store.dispatch({ type: GET_PATIENTS });
+    this.store.dispatch({ type: GET_TESTS });
+    this.store.dispatch({ type: GET_LOCATIONS });
+    this.store.dispatch({ type: GET_ORDERS });
+
+    this.store.select('patient').pipe(take(1)).subscribe((patientState) => {
+      console.log('patientState', patientState);
+    });
+    this.store.select('test').pipe(take(1)).subscribe((testState) => {
+      console.log('testState', testState);
+    });
+    this.store.select('location').pipe(take(1)).subscribe((locationState) => {
+      console.log('locationState', locationState);
+    });
+    this.store.select('order').pipe(take(1)).subscribe((orderState) => {
+      console.log('orderState', orderState);
+    });
+    
+  }
+  
   logPatients(): void {
     this.patientService.getPatients().subscribe((patients) => {
       console.log('patients', patients);
