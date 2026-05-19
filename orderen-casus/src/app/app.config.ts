@@ -1,6 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -12,9 +11,11 @@ import { PatientEffects } from './shared/state/patient/patient-effects';
 import { TestEffects } from './shared/state/test/test-effects';
 import { LocationEffects } from './shared/state/location/locations-effects';
 import { OrderEffects } from './shared/state/order/order-effects';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideNativeDateAdapter(),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideStore(),
