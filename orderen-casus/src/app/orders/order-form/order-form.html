@@ -3,123 +3,175 @@
 <mat-dialog-content>
 
 <mat-stepper>
-    <mat-step label="Datum en tijd">
-        <p>datum en tijd:</p>
-
-        <mat-form-field>
-        <mat-label>Datum</mat-label>
-
-        <input matInput [matDatepicker]="dp">
-
-        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
-
-        </mat-form-field>
-
-        <mat-form-field>
-        <mat-label>Tijd</mat-label>
-
-        <input matInput type="time">
-        </mat-form-field>
-
-        <div>
-            <button matButton matStepperNext>Volgende</button>
-        </div>
-
-    </mat-step>
-
     <mat-step label="Patient en locatie">
         <p>Patient en locatie:</p>
-
             <mat-form-field>
                 <mat-label>Patient</mat-label>
 
                 <mat-select>
-                    <mat-option value="loc1">Patient 1</mat-option>
-                    <mat-option value="loc2">Patient 2</mat-option>
-                    <mat-option value="loc3">Patient 3</mat-option>
+                    @for (patient of patients; track patient.id) {
+                        <mat-option 
+                        (onSelectionChange)="setPatient(patient.id)"
+                        [value]="patient.id">{{ patient.firstName }} {{ patient.lastName }}</mat-option>
+                    }
                 </mat-select>
+
             </mat-form-field>
+
+            <mat-divider [vertical]="true"></mat-divider>
 
             <mat-form-field>
                 <mat-label>Locatie</mat-label>
 
                 <mat-select>
-                    <mat-option value="loc1">Locatie 1</mat-option>
-                    <mat-option value="loc2">Locatie 2</mat-option>
-                    <mat-option value="loc3">Locatie 3</mat-option>
+                    @for (location of locations; track location.id) {
+                        <mat-option 
+                        (onSelectionChange)="setLocation(location.id)"
+                        [value]="location.id">{{ location.name }}</mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
 
             <div>
-                <button matButton matStepperNext>Volgende</button>
-                <button matButton matStepperPrevious>Terug</button>
+                @if (showNextButton(1)) {
+                    <button matButton matStepperNext>Volgende</button>
+                }
             </div>
     </mat-step>
 
+
     <mat-step label="Tests">
+
         <p>Tests:</p>
 
-        <mat-form-field>
-            <mat-label>Tests</mat-label>
+            <div class="tests">
+                <mat-form-field>
+                <mat-label>Tests</mat-label>
 
-                <mat-select multiple>
-                    <mat-option value="test1">Test 1</mat-option>
-                    <mat-option value="test2">Test 2</mat-option>
-                    <mat-option value="test3">Test 3</mat-option>
-                </mat-select>
-        </mat-form-field>
+                    <mat-select multiple>
+                        @for (test of tests; track test.id) {
+                            <mat-option 
+                            (onSelectionChange)="addTest(test.id)"
+                            [value]="test.id">{{ test.name }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <p>total duration:</p>
+            </div>
+
 
         <div>
-            <button matButton matStepperNext>Volgende</button>
             <button matButton matStepperPrevious>Terug</button>
+            @if (showNextButton(2)) {
+                <button matButton matStepperNext>Volgende</button>
+            }
         </div>
+    
     </mat-step>
+    
+    <mat-step label="Datum en tijd" >
+        <p>datum en tijd:</p>
+
+        <mat-form-field>
+        <mat-label>Datum</mat-label>
+
+        <input 
+        (dateChange)="onDateChange($event)"
+        matInput [matDatepicker]="dp">
+
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+
+        </mat-form-field>
+        
+        <mat-divider [vertical]="true" ></mat-divider>
+        
+
+        <div class="time">
+
+            <mat-form-field>
+            <mat-label>Begintijd</mat-label>
+            <mat-select>
+                @for (timeSlot of timeSlots; track timeSlot) {
+                    <mat-option 
+                    (onSelectionChange)="setStartTime(timeSlot)"
+                    [value]="timeSlot">{{ timeSlot }}
+                </mat-option>
+                }
+            </mat-select>
+
+            </mat-form-field>
+
+            <mat-form-field class="end-time">
+            <mat-label>Eindtijd</mat-label>
+            <mat-select>
+                @for (timeSlot of timeSlots; track timeSlot) {
+                    <mat-option 
+                    (onSelectionChange)="setEndTime(timeSlot)"
+                    [value]="timeSlot">{{ timeSlot }}
+                    </mat-option>
+                }
+            </mat-select>
+
+        </mat-form-field>
+
+            
+        </div>
+
+        <div>
+            <button matButton matStepperPrevious>Terug</button>
+            @if(showNextButton(3)) {
+                <button matButton matStepperNext>Volgende</button>
+            }
+        </div>
+
+    </mat-step>
+
     <mat-step label="Bevestiging">
         <p>Stap 4: Bevesig:</p>
 
-        <p>Maandag 16 juni: 10:00 - 12:00.</p>
+        <p>{{ this.currentOrder?.startDateTime }} tot {{ currentOrder?.endDateTime }}</p>
 
-        <p>Patient: John Doe</p>
+        <p>Patient: {{ currentOrder?.patientId }}</p>
 
-        <p>Locatie: Locatie 1</p>
+        <p>Locatie: {{ currentOrder?.locationId }}</p>
 
         <p>Tests:</p>
 
-    <table mat-table [dataSource]="ELEMENT_DATA" class="mat-elevation-z8">
+        <table mat-table [dataSource]="tests" class="mat-elevation-z8">
 
-    <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let test"> {{test.code}} </td>
     </ng-container>
 
-  <!-- Name Column -->
+
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let test"> {{test.name}} </td>
     </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef> Weight </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+ 
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef> Duration </th>
+    <td mat-cell *matCellDef="let test"> {{test.durationMinutes}} mintutes </td>
   </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> Symbol </th>
-    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-  </ng-container>
+
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    </table>
 
     <div>
-        <button mat-button color="primary">Opslaan</button>
         <button matButton matStepperPrevious>Terug</button>
+        <button (click)="addOrder()" mat-button color="primary">Opslaan</button>
     </div>
     </mat-step>
+    
+
 </mat-stepper>
 
 

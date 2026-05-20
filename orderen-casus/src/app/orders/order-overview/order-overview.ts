@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';;
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Store } from '@ngrx/store';
 import { Appstore } from 'src/app/shared/state/app-store';
@@ -22,6 +22,8 @@ export class OrderOverview implements OnInit {
     private readonly store = inject(Store<Appstore>);
     private readonly dialog = inject(MatDialog);
     
+    calendarEvents: EventInput[] = [];
+    
     calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     firstDay: 1,
@@ -32,15 +34,17 @@ export class OrderOverview implements OnInit {
     this.store.dispatch({ type: GET_ORDERS });
 
     this.store.subscribe((state) => {
-      
-      this.calendarOptions.events = [
-        ...state.orders.items.map((order: Order) => ({
-          title: `${order.startDateTime} - ${order.endDateTime}`,
-          start: order.startDateTime,
-          end: order.endDateTime,
-        })),
-      ];
-    
+      console.log('updated orders list');
+      console.log(state.orders.items);
+
+      this.calendarEvents = [];
+
+      this.calendarEvents = state.orders.items.map((order: Order) => ({
+        title: `${order.startDateTime} - ${order.endDateTime}`,
+        start: order.startDateTime,
+        end: order.endDateTime,
+      }));
+          
     });
 
   }
@@ -50,6 +54,7 @@ export class OrderOverview implements OnInit {
       width: '900vw',
       maxWidth: '80vw',
       height: '600px',
+      disableClose: true
     });
   }
 

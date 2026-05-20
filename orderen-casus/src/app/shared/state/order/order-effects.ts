@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { Appstore } from "../app-store";
 import { catchError, of, switchMap, tap } from "rxjs";
-import { setOrders, setOrderError, toggleOrderLoading, getOrders } from "./order-actions";
+import { addOrder, setOrders, setOrderError, toggleOrderLoading, getOrders, saveOrder } from "./order-actions";
 import { OrderService } from "../../services/order.service";
 
 @Injectable()
@@ -27,6 +27,20 @@ export class OrderEffects{
             catchError(() => of(setOrderError( {happend:true, message: 'unable to retrieve Orders' } ))),
         ),
     )
+));
+
+saveOrder$ = createEffect( () => this.actions$.pipe(
+    ofType(saveOrder),
+    tap( () => this.store.dispatch( toggleOrderLoading( )) ),
+    switchMap(action => this.orderService.addOrder(action.order)
+    .pipe(
+        switchMap(order => of(
+            toggleOrderLoading(),
+            addOrder({ order: order })
+        )),
+        catchError(() => of(setOrderError( {happend:true, message: 'unable to save Order' } ))),
+    ),
+)
 ));
 
 
