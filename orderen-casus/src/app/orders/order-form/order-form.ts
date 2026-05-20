@@ -22,13 +22,6 @@ import { Order } from 'src/app/shared/models/order';
 import { addTest, setPatientId, setLocationId, setEndDateTime, setStartDateTime, saveOrder } from 'src/app/shared/state/order/order-actions';
 import { OrderView } from "../order-view/order-view";
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.html',
@@ -50,8 +43,6 @@ export interface PeriodicElement {
   
 })
 export class OrderForm implements OnInit{
-  displayedColumns: string[] = ['code', 'name', 'duration'];
-
   private readonly store: Store<Appstore>;
   protected patients : Patient[] = [];
   protected locations: Location[] = [];
@@ -99,17 +90,14 @@ export class OrderForm implements OnInit{
     this.startDate = date.toISOString();
     this.endDate = date.toISOString();
   }
-
   
   addTest(testId: string) {
     this.store.dispatch(addTest({testId: testId}));
   }
 
-
   addTimeToDate(dateTimeString:string, time:string) : string{
     const date = new Date(dateTimeString);
     const timeParts = time.split(':');
-    console.log(timeParts);
     
     const hours = parseInt(timeParts[0], 10);
     const minutes = parseInt(timeParts[1], 10);
@@ -128,7 +116,6 @@ export class OrderForm implements OnInit{
   } 
   
   addOrder() {
-    console.log('Saving order: ', this.currentOrder);
     if (!this.currentOrder) {
       console.warn('No current order to save.');
       return;
@@ -137,9 +124,7 @@ export class OrderForm implements OnInit{
     this.store.dispatch(saveOrder({ order: this.currentOrder }));
   }
 
-
-
-  public showNextButton(stepNumber: number): boolean {
+  showNextButton(stepNumber: number): boolean {
       switch(stepNumber) {
         case 1: 
           return this.currentOrder?.patientId !== '' && this.currentOrder?.locationId !== '';
@@ -151,6 +136,5 @@ export class OrderForm implements OnInit{
           return false;
       }
   }
-
 
 }

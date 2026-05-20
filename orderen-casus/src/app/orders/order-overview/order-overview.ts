@@ -15,7 +15,7 @@ import { DateService } from 'src/app/shared/services/date.service';
 
 @Component({
   selector: 'app-order-overview',
-  imports: [CommonModule, FullCalendarModule, OrderForm, MatButtonModule, MatIconModule],
+  imports: [CommonModule, FullCalendarModule, MatButtonModule, MatIconModule],
   templateUrl: './order-overview.html',
   styleUrl: './order-overview.scss',
 })

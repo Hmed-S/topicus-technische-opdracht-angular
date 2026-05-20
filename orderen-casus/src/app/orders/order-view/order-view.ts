@@ -21,7 +21,6 @@ export class OrderView implements OnInit {
   protected location: Location | undefined;
   protected tests: Test[] | undefined;
   private readonly store;
-  displayedColumns: string[] = ['code', 'name', 'duration'];
 
   constructor(store: Store<Appstore>) {
     this.store = store;

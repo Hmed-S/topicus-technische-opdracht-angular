@@ -13,10 +13,9 @@
 
     
     <ng-container matColumnDef="duration">
-    <th mat-header-cell *matHeaderCellDef> Duration </th>
-    <td mat-cell *matCellDef="let test"> {{test.durationMinutes}} mintutes </td>
+        <th mat-header-cell *matHeaderCellDef> Duration </th>
+        <td mat-cell *matCellDef="let test"> {{test.durationMinutes}} mintutes </td>
     </ng-container>
-
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

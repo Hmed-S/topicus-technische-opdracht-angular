@@ -1,10 +1,10 @@
-<h2 mat-dialog-title>Lab order plaatsen</h2>
+<h2 mat-dialog-title>Place a Lab order</h2>
 
 <mat-dialog-content>
 
 <mat-stepper>
-    <mat-step label="Patient en locatie">
-        <p>Patient en locatie:</p>
+    <mat-step label="Patient & location">
+        <p>Patient & location:</p>
             <mat-form-field>
                 <mat-label>Patient</mat-label>
 
@@ -21,7 +21,7 @@
             <mat-divider [vertical]="true"></mat-divider>
 
             <mat-form-field>
-                <mat-label>Locatie</mat-label>
+                <mat-label>Location</mat-label>
 
                 <mat-select>
                     @for (location of locations; track location.id) {
@@ -34,7 +34,7 @@
 
             <div>
                 @if (showNextButton(1)) {
-                    <button matButton matStepperNext>Volgende</button>
+                    <button matButton matStepperNext>Next</button>
                 }
             </div>
     </mat-step>
@@ -63,19 +63,19 @@
 
 
         <div>
-            <button matButton matStepperPrevious>Terug</button>
+            <button matButton matStepperPrevious>Previous</button>
             @if (showNextButton(2)) {
-                <button matButton matStepperNext>Volgende</button>
+                <button matButton matStepperNext>Next</button>
             }
         </div>
     
     </mat-step>
     
-    <mat-step label="Datum en tijd" >
-        <p>datum en tijd:</p>
+    <mat-step label="Date" >
+        <p>date:</p>
 
         <mat-form-field>
-        <mat-label>Datum</mat-label>
+        <mat-label>Date</mat-label>
 
         <input 
         (dateChange)="onDateChange($event)"
@@ -92,7 +92,7 @@
         <div class="time">
 
             <mat-form-field>
-            <mat-label>Begintijd</mat-label>
+            <mat-label>Start time</mat-label>
             <mat-select>
                 @for (timeSlot of timeSlots; track timeSlot) {
                     <mat-option 
@@ -105,7 +105,7 @@
             </mat-form-field>
 
             <mat-form-field class="end-time">
-            <mat-label>Eindtijd</mat-label>
+            <mat-label>End time</mat-label>
             <mat-select>
                 @for (timeSlot of timeSlots; track timeSlot) {
                     <mat-option 
@@ -121,21 +121,21 @@
         </div>
 
         <div>
-            <button matButton matStepperPrevious>Terug</button>
+            <button matButton matStepperPrevious>Previous</button>
             @if(showNextButton(3)) {
-                <button matButton matStepperNext>Volgende</button>
+                <button matButton matStepperNext>Next</button>
             }
         </div>
 
     </mat-step>
 
-    <mat-step label="Bevestiging">
+    <mat-step label="Confirm">
 
     <app-order-view></app-order-view>
     <div>
         
-        <button matButton matStepperPrevious>Terug</button>
-        <button (click)="addOrder()" mat-button color="primary">Opslaan</button>
+        <button matButton matStepperPrevious>Previous</button>
+        <button (click)="addOrder()" mat-button color="primary">Save</button>
     </div>
     </mat-step>
     
@@ -147,5 +147,5 @@
 
 
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Anuleren</button>
+  <button mat-button mat-dialog-close>Close</button>
 </mat-dialog-actions>
