@@ -11,6 +11,7 @@ import { OrderForm } from "../order-form/order-form";
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { DateService } from 'src/app/shared/services/date.service';
 
 @Component({
   selector: 'app-order-overview',
@@ -21,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class OrderOverview implements OnInit {
     private readonly store = inject(Store<Appstore>);
     private readonly dialog = inject(MatDialog);
+    private readonly dateService = inject(DateService);
     
     calendarEvents: EventInput[] = [];
     
@@ -29,7 +31,11 @@ export class OrderOverview implements OnInit {
     firstDay: 1,
     plugins: [dayGridPlugin]
   };
+   
 
+   timeOfDate(date: string): string{
+    return this.dateService.getTimeOfDate(date);
+   }
    ngOnInit(): void {
     this.store.dispatch({ type: GET_ORDERS });
 
@@ -40,7 +46,7 @@ export class OrderOverview implements OnInit {
       this.calendarEvents = [];
 
       this.calendarEvents = state.orders.items.map((order: Order) => ({
-        title: `${order.startDateTime} - ${order.endDateTime}`,
+        title: `${this.timeOfDate(order.startDateTime)} - ${this.timeOfDate(order.endDateTime)}`,
         start: order.startDateTime,
         end: order.endDateTime,
       }));
