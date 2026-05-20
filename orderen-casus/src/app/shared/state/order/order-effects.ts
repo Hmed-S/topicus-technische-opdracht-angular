@@ -5,6 +5,7 @@ import { Appstore } from "../app-store";
 import { catchError, of, switchMap, tap } from "rxjs";
 import { addOrder, setOrders, setOrderError, toggleOrderLoading, getOrders, saveOrder } from "./order-actions";
 import { OrderService } from "../../services/order.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class OrderEffects{
@@ -12,7 +13,8 @@ export class OrderEffects{
     constructor( 
         private actions$: Actions,
         @Inject(Store) private store: Store<Appstore>,
-        private orderService: OrderService
+        private orderService: OrderService,
+        private snackbar: MatSnackBar
     ) {}
 
     getOrders$ = createEffect( () => this.actions$.pipe(
@@ -29,18 +31,24 @@ export class OrderEffects{
     )
 ));
 
-saveOrder$ = createEffect( () => this.actions$.pipe(
-    ofType(saveOrder),
-    tap( () => this.store.dispatch( toggleOrderLoading( )) ),
-    switchMap(action => this.orderService.addOrder(action.order)
-    .pipe(
-        switchMap(order => of(
-            toggleOrderLoading(),
-            addOrder({ order: order })
-        )),
-        catchError(() => of(setOrderError( {happend:true, message: 'unable to save Order' } ))),
-    ),
-)
+    saveOrder$ = createEffect( () => this.actions$.pipe(
+        ofType(saveOrder),
+        tap( () => this.store.dispatch( toggleOrderLoading( )) ),
+        switchMap(action => this.orderService.addOrder(action.order)
+        .pipe(
+            switchMap(order => of(
+                toggleOrderLoading(),
+                addOrder({ order: order })
+            )),
+            catchError((e: Error) =>{
+                this.snackbar.open(e.message, 'X', {
+                    duration: 3000
+                });
+
+                return of(setOrderError( {happend:false, message: '' } ))
+            }), 
+        ),
+    )
 ));
 
 

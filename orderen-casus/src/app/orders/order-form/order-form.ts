@@ -106,9 +106,11 @@ export class OrderForm implements OnInit{
   }
 
 
-  convertDate(dateTimeString:string, time:string) : string{
+  addTimeToDate(dateTimeString:string, time:string) : string{
     const date = new Date(dateTimeString);
     const timeParts = time.split(':');
+    console.log(timeParts);
+    
     const hours = parseInt(timeParts[0], 10);
     const minutes = parseInt(timeParts[1], 10);
     date.setUTCHours(hours, minutes);
@@ -116,13 +118,12 @@ export class OrderForm implements OnInit{
   }
 
   setStartTime(time: string) {
-    this.startDate = this.convertDate(this.startDate, time);
+    this.startDate = this.addTimeToDate(this.startDate, time);
+    this.store.dispatch(setStartDateTime({ startDateTime: this.startDate }));
   }
 
   setEndTime(time: string) {
-    this.endDate = this.convertDate(this.endDate, time);
-
-    this.store.dispatch(setStartDateTime({ startDateTime: this.startDate }));
+    this.endDate = this.addTimeToDate(this.endDate, time);
     this.store.dispatch(setEndDateTime({ endDateTime: this.endDate }));
   } 
   

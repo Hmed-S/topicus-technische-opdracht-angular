@@ -1,8 +1,9 @@
 import { inject, Injectable, Injector, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { ORDER_FIXTURES } from 'src/app/shared/fixtures';
 import { Order } from 'src/app/shared/models/order';
+import { DateService } from './date.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +15,21 @@ export class OrderService {
   private readonly orders$ = toObservable(this.ordersStore, {
     injector: this.injector,
   });
+  private readonly dateService = inject(DateService);
 
   getOrders(): Observable<Order[]> {
     return this.orders$;
   }
 
   addOrder(order: Order): Observable<Order> {
+    if (this.dateService.dateIsInWeekend(order.startDateTime)){
+      return throwError(() => new Error('Date can not be in weekend'));
+    }
+
+    if (this.dateService.dateIsInPast(order.startDateTime)){
+      return throwError(() => new Error('Date can not be in the past'));
+    }
+
     const nextOrders = [...this.ordersStore(), order];
     this.ordersStore.set(nextOrders);
     this.persist(nextOrders);
