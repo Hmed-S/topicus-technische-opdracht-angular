@@ -29,7 +29,6 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.html',
