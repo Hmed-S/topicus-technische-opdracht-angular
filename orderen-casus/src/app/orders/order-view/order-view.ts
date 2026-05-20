@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { inject } from '@angular/core/primitives/di';
 import { Store } from '@ngrx/store';
 import { Order } from 'src/app/shared/models/order';
 import { Patient } from 'src/app/shared/models/patient';
@@ -7,10 +6,11 @@ import { Location } from 'src/app/shared/models/location'
 import { Test } from 'src/app/shared/models/test';
 import { Appstore } from 'src/app/shared/state/app-store';
 import { MatTableModule } from '@angular/material/table';
+import { TestOverview } from "src/app/tests/test-overview/test-overview";
 
 @Component({
   selector: 'app-order-view',
-  imports: [MatTableModule],
+  imports: [MatTableModule, TestOverview],
   templateUrl: './order-view.html',
   styleUrl: './order-view.scss',
 })
