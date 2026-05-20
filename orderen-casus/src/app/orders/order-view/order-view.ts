@@ -5,12 +5,13 @@ import { Patient } from 'src/app/shared/models/patient';
 import { Location } from 'src/app/shared/models/location'
 import { Test } from 'src/app/shared/models/test';
 import { Appstore } from 'src/app/shared/state/app-store';
-import { MatTableModule } from '@angular/material/table';
 import { TestOverview } from "src/app/tests/test-overview/test-overview";
+import { FriendlyDatePipe } from 'src/app/shared/pipes/friendly-date.pipe';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-order-view',
-  imports: [MatTableModule, TestOverview],
+  imports: [DatePipe, FriendlyDatePipe, TestOverview],
   templateUrl: './order-view.html',
   styleUrl: './order-view.scss',
 })

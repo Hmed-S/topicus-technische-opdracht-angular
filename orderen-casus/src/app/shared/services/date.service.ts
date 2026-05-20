@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -6,13 +7,12 @@ import { Injectable } from '@angular/core';
 export class DateService {
 
   public getTimeOfDate(datetimeString: string): string{
-    const date = new Date(datetimeString);
-    return `${date.getHours()}:${date.getMinutes()}`
+    return formatDate(datetimeString, 'HH:mm', 'en-US', 'UTC');
   }
 
   public toFriendlyString(datetimeString: string): string{
     const date = new Date(datetimeString);
-    return date.toLocaleDateString();
+    return date.toDateString();
   }
 
   public dateIsInPast(dateTimeString: string): boolean{

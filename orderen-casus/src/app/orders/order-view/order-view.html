@@ -1,8 +1,8 @@
-<p>{{ this.order?.startDateTime }} - {{ this.order?.endDateTime}}</p>
+<p>{{ (this.order?.startDateTime ?? '') | friendlyDate }}  {{ this.order?.startDateTime ?? '' | date:'HH:mm':'UTC'}}-{{ this.order?.endDateTime ?? '' | date:'HH:mm':'UTC'}}</p>
 
 <p>Patient: {{this.patient?.firstName }} {{ this.patient?.lastName}}</p>
 
-<p>Locatie: {{ location?.name }} - {{location?.room}}</p>
+<p>Location: {{ location?.name }} - {{location?.room}}</p>
 
 <p>Tests:</p>
 
