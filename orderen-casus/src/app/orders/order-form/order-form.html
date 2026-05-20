@@ -130,42 +130,10 @@
     </mat-step>
 
     <mat-step label="Bevestiging">
-        <p>Stap 4: Bevesig:</p>
 
-        <p>{{ this.currentOrder?.startDateTime }} tot {{ currentOrder?.endDateTime }}</p>
-
-        <p>Patient: {{ currentOrder?.patientId }}</p>
-
-        <p>Locatie: {{ currentOrder?.locationId }}</p>
-
-        <p>Tests:</p>
-
-        <table mat-table [dataSource]="tests" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef> Code </th>
-        <td mat-cell *matCellDef="let test"> {{test.code}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let test"> {{test.name}} </td>
-    </ng-container>
-
- 
-  <ng-container matColumnDef="duration">
-    <th mat-header-cell *matHeaderCellDef> Duration </th>
-    <td mat-cell *matCellDef="let test"> {{test.durationMinutes}} mintutes </td>
-  </ng-container>
-
-
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
+    <app-order-view></app-order-view>
     <div>
+        
         <button matButton matStepperPrevious>Terug</button>
         <button (click)="addOrder()" mat-button color="primary">Opslaan</button>
     </div>

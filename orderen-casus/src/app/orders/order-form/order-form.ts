@@ -20,6 +20,7 @@ import { Location } from 'src/app/shared/models/location';
 import { Test } from 'src/app/shared/models/test';
 import { Order } from 'src/app/shared/models/order';
 import { addTest, setPatientId, setLocationId, setEndDateTime, setStartDateTime, saveOrder } from 'src/app/shared/state/order/order-actions';
+import { OrderView } from "../order-view/order-view";
 
 export interface PeriodicElement {
   name: string;
@@ -45,6 +46,7 @@ export interface PeriodicElement {
     MatButtonModule,
     MatTableModule,
     ReactiveFormsModule,
+    OrderView
 ]
   
 })
